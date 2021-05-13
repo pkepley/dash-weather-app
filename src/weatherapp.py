@@ -84,8 +84,8 @@ sidebar = dbc.Container([
                     " Repository for this page: ",
                     html.Br(),
                     html.A(
-                        "https://www.example.com",
-                        href="https://www.example.com"
+                        "https://github.com/pkepley/dash-weather-app",
+                        href="https://github.com/pkepley/dash-weather-app",
                     )
                 ],
                 width=12
