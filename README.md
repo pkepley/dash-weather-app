@@ -2,6 +2,9 @@
 A simple web app, whose purposes is to source historical weather forecasts
 / actuals to see how much they deviate over time.
 
+The dashboard is currently hosted at
+[https://www.paulkepley.com/weather-app/](https://www.paulkepley.com/weather-app/).
+
 ## Setup
 - A basic configuration file `config.py` is provided which sets default
   parameters for the data pull, e.g. location of file-store, database, time of
