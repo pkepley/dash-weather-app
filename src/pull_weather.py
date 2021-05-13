@@ -240,7 +240,7 @@ def parse_nws_actl_raw(req_text):
          lambda x: x.split(' ')[0]
     )
     df_nws_actl['wind_speed'] = df_nws_actl['wind'].map(
-         lambda x:  np.nan if len(x) == 0 else np.float(x.split(' ')[1])
+         lambda x:  np.nan if len(x) == 0 else float(x.split(' ')[1])
     )
     gust_obs = df_nws_actl['wind'][df_nws_actl['wind'].str.contains('G')]
     gust_speed = gust_obs.map(lambda x: int(x.split(' ')[3]))
@@ -265,7 +265,7 @@ def parse_nws_actl_raw(req_text):
     # convert the numeric variables to floats
     for v in numeric_var_list:
         tmp = df_nws_actl[v][np.where(df_nws_actl[v] != '')[0]]
-        tmp = tmp.astype(np.float)
+        tmp = tmp.astype(float)
         df_nws_actl[v] = tmp
 
     # reorder columns back to original order
