@@ -34,7 +34,10 @@ app = dash.Dash(
 )
 
 
-sidebar = dbc.Container([
+
+
+def serve_layout():
+    sidebar = dbc.Container([
         dbc.Row(
             dbc.Col(
                 dbc.FormGroup(
@@ -46,7 +49,7 @@ sidebar = dbc.Container([
                             min_date_allowed=date(2019, 8, 25),
                             max_date_allowed=date.today() + timedelta(days=-1),
                             date=date.today() + timedelta(days=-14),
-                        ),
+                    ),
                     ]
                 )
             )
@@ -91,38 +94,16 @@ sidebar = dbc.Container([
                 width=12
             )
         ),
-])
+    ])
 
 
-content = dbc.Container(
-    children=[
-        dbc.Row(dbc.Col([dcc.Graph(id="avf-temperature")], width=12)),
-        dbc.Row(dbc.Col([dcc.Graph(id="avf-wind")], width=12)),
+    content = dbc.Container(
+        children=[
+            dbc.Row(dbc.Col([dcc.Graph(id="avf-temperature")], width=12)),
+            dbc.Row(dbc.Col([dcc.Graph(id="avf-wind")], width=12)),
+        ],
+    )
 
-    ],
-)
-
-# footer = dbc.Container(
-#     children=[
-#         dbc.Row(
-#             dbc.Col(
-#                 [
-#                     html.I(className="fab fa-github fa-lg"),
-#                     " Repository for this page: ",
-#                     html.Br(),
-#                     html.A(
-#                         "https://www.example.com",
-#                         href="https://www.example.com"
-#                     )
-#                 ],
-#                 width=12
-#             )
-#         )
-#     ]
-# )
-
-
-def serve_layout():
     return dbc.Container([
         dbc.Row(
             dbc.Col(
