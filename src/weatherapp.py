@@ -34,24 +34,20 @@ app = dash.Dash(
 )
 
 
-
-
 def serve_layout():
     sidebar = dbc.Container([
         dbc.Row(
             dbc.Col(
-                dbc.FormGroup(
-                    [
-                        dbc.Label("Start Date"),
-                        html.Br(),
-                        dcc.DatePickerSingle(
-                            id="date-picker",
-                            min_date_allowed=date(2019, 8, 25),
-                            max_date_allowed=date.today() + timedelta(days=-1),
-                            date=date.today() + timedelta(days=-14),
+                [
+                    dbc.Label("Start Date"),
+                    html.Br(),
+                    dcc.DatePickerSingle(
+                        id="date-picker",
+                        min_date_allowed=date(2019, 8, 25),
+                        max_date_allowed=date.today() + timedelta(days=-1),
+                        date=date.today() + timedelta(days=-14),
                     ),
-                    ]
-                )
+                ]
             )
         ),
         html.Br(),
@@ -115,10 +111,6 @@ def serve_layout():
             dbc.Col(sidebar, width=3),
             dbc.Col(content, width=9)
         ]),
-        # html.Br(),
-        # dbc.Row(
-        #     footer
-        # )
     ])
 
 
