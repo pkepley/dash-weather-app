@@ -1,3 +1,6 @@
 data/*
 !data/airports.csv
 .flaskenv
+log
+scripts
+data-tmp
