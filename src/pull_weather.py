@@ -2,6 +2,7 @@
 forecast and actual weather data.'''
 import sys
 import os
+import re
 import pathlib
 import time
 from datetime import datetime, timedelta
@@ -14,6 +15,7 @@ from bs4 import BeautifulSoup
 from pytz import timezone
 from tzlocal import get_localzone
 
+whitespace_re = re.compile("\s\s+")
 
 def random_sleep(sleep_min=3, sleep_max=4):
     '''Sleep for a random amount of time, randomly selected over
@@ -173,7 +175,7 @@ def pull_nws_actl(airport_name, df_airports):
     today_datetime = now_datetime.astimezone(timezone(tz_str))
 
     # pull data
-    base_url = f'https://w1.weather.gov/data/obhistory/{airport_name}.html'
+    base_url = f'https://forecast.weather.gov/data/obhistory/{airport_name}.html'
     req = repeat_request(base_url)
 
     if req is not None:
@@ -192,11 +194,14 @@ def parse_nws_actl_raw(req_text):
     No data will be filtered (so the output df will contain 72 hours
     of data), and no date-stamp is added.'''
 
+    # remove repeated whitespace
+    req_text = whitespace_re.sub(" ", req_text)
+
     # Parse the HTML
     soup = BeautifulSoup(req_text, 'html.parser')
 
     # extract table data
-    table = soup.find_all('table')[3]
+    table = soup.find_all('table')[0]
     table_head = table.find_all('th')
     table_rows = table.find_all('tr')[3:][:-3]
     table_data = [tr.find_all('td') for tr in table_rows]
@@ -228,7 +233,7 @@ def parse_nws_actl_raw(req_text):
 
     # convert any NA values to np.nan
     for c in df_nws_actl.columns:
-        df_nws_actl[c] = df_nws_actl[c].map(lambda x: '' if x == 'NA' else x)
+        df_nws_actl[c] = df_nws_actl[c].map(lambda x: '' if x == 'NA' else x.strip())
 
     # split wind information and rename raw wind data to wind_raw the
     # first line of the following is a lazy hack. it is undone on the
